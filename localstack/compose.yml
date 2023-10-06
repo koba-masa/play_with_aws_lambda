@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - 4566:4566
+    environment:
+      DEBUG: 1
+      DOCKER_HOST: unix:///var/run/docker.sock
+      SERVICES: 's3'
+    volumes:
+      - ./docker_files/localstack/init/ready.d:/etc/localstack/init/ready.d
+      - /var/run/docker.sock:/var/run/docker.sock
