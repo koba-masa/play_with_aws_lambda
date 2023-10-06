@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  ruby:
+    build:
+      context: .
+      dockerfile: ./docker_files/Dockerfile.ruby
+    volumes:
+      - ./ruby:/app
+      - app_bundle:/usr/local/bundle
+
   localstack:
     image: localstack/localstack:latest
     ports:
@@ -12,3 +20,7 @@ services:
     volumes:
       - ./docker_files/localstack/init/ready.d:/etc/localstack/init/ready.d
       - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  app_bundle:
+    external: false
