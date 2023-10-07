@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  ruby:
+    build:
+      context: .
+      dockerfile: ./docker_files/Dockerfile.ruby
+    volumes:
+      - ./ruby:/app
+      - app_bundle:/usr/local/bundle
+
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - 4566:4566
+    environment:
+      DEBUG: 1
+      DOCKER_HOST: unix:///var/run/docker.sock
+      SERVICES: 's3'
+    volumes:
+      - ./docker_files/localstack/init/ready.d:/etc/localstack/init/ready.d
+      - ./docker_files/localstack/tmp:/tmp/docker_files
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  app_bundle:
+    external: false
