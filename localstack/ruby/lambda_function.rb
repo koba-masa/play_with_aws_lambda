@@ -14,5 +14,3 @@ end
 def credentials
   Aws::Credentials.new('access_key_id', 'secret_access_key')
 end
-
-puts handler(event: {}, context: {})
